@@ -21,6 +21,11 @@ object ProductResource extends Directives with JsonSupport with StrictLogging {
         complete(List[Product]())
       }
     } ~
+      pathPrefix("product" / Segment) { productId =>
+        get {
+          complete(Product("1234", "roboto")) // will render as JSON
+        }
+      } ~
       pathPrefix("product") {
         get {
           parameters('name) { name =>
@@ -45,11 +50,7 @@ object ProductResource extends Directives with JsonSupport with StrictLogging {
               }
             }
           }
-      } ~
-      pathPrefix("product" / Remaining) { productId =>
-        get {
-          complete(Product("1234", "roboto")) // will render as JSON
-        }
       }
+
 
 }
