@@ -3,7 +3,6 @@ package com.github.notyy
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.{Directives, Route}
-import akka.util.ByteString
 import com.github.notyy.domain.Product
 import com.github.notyy.service.{ProductService, TempProduct}
 import spray.json.DefaultJsonProtocol
@@ -30,7 +29,7 @@ object ProductResource extends Directives with JsonSupport {
       entity(as[TempProduct]) { tempProduct => // will unmarshal JSON to Order
         val optProduct = ProductService.create(tempProduct)
         if (optProduct.isEmpty) {
-          complete(StatusCodes.Conflict)
+          complete(StatusCodes.BadRequest)
         } else {
           complete(StatusCodes.Created, s"Product created with id: ${optProduct.get.id}")
         }
