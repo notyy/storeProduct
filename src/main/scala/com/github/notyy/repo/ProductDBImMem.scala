@@ -8,16 +8,18 @@ trait ProductDBImMem extends ProductRepo {
   private var products: mutable.Map[String, Product] = mutable.Map[String, Product]()
   private var latestId = 0
 
-  override def insert(name: String): String = {
-    val newId = latestId + 1
-    val strNewId = newId.toString
-    products += (strNewId -> Product(strNewId, name))
-    latestId = newId
-    strNewId
+  override def insert(name: String): Option[String] = {
+    if (selectByName(name).isEmpty) {
+      val newId = latestId + 1
+      val strNewId = newId.toString
+      products += (strNewId -> Product(strNewId, name))
+      latestId = newId
+      Some(strNewId)
+    } else None
   }
 
-  override def selectByName(name: String): List[Product] = {
-    products.values.filter(_.name == name).toList
+  override def selectByName(name: String): Option[Product] = {
+    products.values.filter(_.name == name).toList.headOption
   }
 
   override def get(id: String): Option[Product] = products.get(id)

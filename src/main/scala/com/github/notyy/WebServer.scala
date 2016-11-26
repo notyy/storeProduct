@@ -39,7 +39,8 @@ object WebServer {
               )
             )
           }
-        }
+        } ~ ProductResource.route
+
 
     val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
 
