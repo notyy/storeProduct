@@ -15,7 +15,7 @@ class ProductServiceTest extends FunSpec with ShouldMatchers {
       optProduct.get.id should not be empty
       optProduct.get.name shouldBe "router"
     }
-    it("duplicated product name is not allowed"){
+    it("duplicated product name is not allowed") {
       val productService = new ProductService with ProductDBImMem
       val firstProduct = productService.create(TempProduct("router"))
       firstProduct should not be empty
@@ -23,6 +23,17 @@ class ProductServiceTest extends FunSpec with ShouldMatchers {
 
       val secondProduct = productService.create(TempProduct("router"))
       secondProduct shouldBe empty
+    }
+    it("inserted product can be queried") {
+      val productService = new ProductService with ProductDBImMem
+
+      productService.findByName("router") shouldBe empty
+
+      productService.create(TempProduct("router"))
+      val optProduct = productService.findByName("router")
+      optProduct should not be empty
+      optProduct.get.id should not be empty
+      optProduct.get.name shouldBe "router"
     }
   }
 }

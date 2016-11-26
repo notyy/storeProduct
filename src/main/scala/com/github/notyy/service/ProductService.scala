@@ -13,7 +13,7 @@ trait ProductService {
     insert(tempProduct.name).map(id => Product(id, tempProduct.name))
   }
 
-  def findByName(name: String): Option[domain.Product] = ???
+  def findByName(name: String): Option[domain.Product] = selectByName(name)
 
   def findById(id: String): Option[domain.Product] = ???
 }
