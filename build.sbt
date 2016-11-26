@@ -34,7 +34,8 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.11" % "test",
   "com.h2database" % "h2" % "1.3.176",
   "com.typesafe.akka" %% "akka-http" % "10.0.0",
-  "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.0"
+  "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.0",
+  "com.itv" %% "scalapact-scalatest" % "2.0.0" % "test"
 )
 
 //   TODO reopen it later

@@ -13,3 +13,5 @@ addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "1.0.3")
 addSbtPlugin("org.xerial.sbt" % "sbt-pack" % "0.6.12")
 
 addSbtPlugin("com.twitter" %% "scrooge-sbt-plugin" % "4.1.0")
+
+addSbtPlugin("com.itv.plugins" % "scalapact-plugin" % "2.0.0")
