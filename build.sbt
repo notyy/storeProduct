@@ -33,7 +33,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "junit" % "junit" % "4.11" % "test",
   "com.h2database" % "h2" % "1.3.176",
-  "com.typesafe.akka" %% "akka-http" % "10.0.0" 
+  "com.typesafe.akka" %% "akka-http" % "10.0.0",
+  "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.0"
 )
 
 //   TODO reopen it later
