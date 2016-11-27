@@ -35,7 +35,9 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % "1.3.176",
   "com.typesafe.akka" %% "akka-http" % "10.0.0",
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.0",
-  "com.itv" %% "scalapact-scalatest" % "2.0.0" % "test"
+  "com.itv" %% "scalapact-scalatest" % "2.0.0" % "test",
+  "org.scalaj" %% "scalaj-http" % "1.1.5",
+  "org.json4s" %% "json4s-native" % "3.3.0"
 )
 
 //   TODO reopen it later
@@ -89,8 +91,8 @@ showSuccess := false
 
 // change the format used for printing task completion time
 timingFormat := {
-    import java.text.DateFormat
-    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+  import java.text.DateFormat
+  DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
 }
 
 // only use a single thread for building
@@ -138,19 +140,19 @@ parallelExecution in Test := false
 
 // create beautiful scala test report
 testOptions in Test ++= Seq(
-  Tests.Argument(TestFrameworks.ScalaTest,"-h","target/html-unit-test-report"),
-  Tests.Argument(TestFrameworks.ScalaTest,"-u","target/unit-test-reports"),
-  Tests.Argument(TestFrameworks.ScalaTest,"-o"),
-  Tests.Argument(TestFrameworks.ScalaTest,"-l","FunctionTest")
+  Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/html-unit-test-report"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/unit-test-reports"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-o"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-l", "FunctionTest")
 )
 
 testOptions in jacoco.Config ++= Seq(
-  Tests.Argument(TestFrameworks.ScalaTest,"-h","target/html-unit-test-report"),
-  Tests.Argument(TestFrameworks.ScalaTest,"-u","target/unit-test-reports"),
-  Tests.Argument(TestFrameworks.ScalaTest,"-o"),
-  Tests.Argument(TestFrameworks.ScalaTest,"-l","FunctionTest")
+  Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/html-unit-test-report"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/unit-test-reports"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-o"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-l", "FunctionTest")
 )
 
 packAutoSettings
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature","-language:higherKinds","-language:implicitConversions")
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-language:higherKinds", "-language:implicitConversions")
