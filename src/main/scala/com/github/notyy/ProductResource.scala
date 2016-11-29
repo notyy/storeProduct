@@ -16,41 +16,40 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 
 object ProductResource extends Directives with JsonSupport with StrictLogging {
   val route: Route =
-    path("product") {
-      get {
-        complete(List[Product]())
-      }
-    } ~
-      pathPrefix("product" / Segment) { productId =>
+    pathPrefix("product") {
+      parameters('name) { name =>
         get {
-          complete(Product("1234", "roboto")) // will render as JSON
+          val optProduct = ProductService.findByName(name)
+          logger.info(s"query product by name: $name")
+          if (optProduct.isEmpty) {
+            logger.info(s"product not found for name: $name")
+            complete(StatusCodes.NotFound)
+          } else {
+            logger.info(s"product found for name: $name")
+            complete(optProduct.get)
+          }
         }
       } ~
-      pathPrefix("product") {
-        get {
-          parameters('name) { name =>
-            val optProduct = ProductService.findByName(name)
-            logger.info(s"query product by name: $name")
+        post {
+          entity(as[TempProduct]) { tempProduct => // will unmarshal JSON to Order
+            val optProduct = ProductService.create(tempProduct)
             if (optProduct.isEmpty) {
-              logger.info(s"product not found for name: $name")
-              complete(StatusCodes.NotFound)
+              complete(StatusCodes.BadRequest)
             } else {
-              logger.info(s"product found for name: $name")
-              complete(optProduct.get)
+              complete(StatusCodes.Created, s"Product created with id: ${optProduct.get.id}")
             }
           }
         } ~
-          post {
-            entity(as[TempProduct]) { tempProduct => // will unmarshal JSON to Order
-              val optProduct = ProductService.create(tempProduct)
-              if (optProduct.isEmpty) {
-                complete(StatusCodes.BadRequest)
-              } else {
-                complete(StatusCodes.Created, s"Product created with id: ${optProduct.get.id}")
-              }
-            }
+        path(Segment) { productId =>
+          get {
+            logger.info(s"query by id: $productId")
+            complete(Product("1234", "roboto")) // will render as JSON
           }
-      }
-
-
+        } ~
+        pathEndOrSingleSlash {
+          get {
+            complete(List[Product]())
+          }
+        }
+    }
 }
