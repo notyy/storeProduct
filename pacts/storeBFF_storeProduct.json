@@ -1,0 +1,41 @@
+{
+  "provider" : {
+    "name" : "storeProduct"
+  },
+  "consumer" : {
+    "name" : "storeBFF"
+  },
+  "interactions" : [
+    {
+      "providerState" : "product named `not_exist` doesn't exists",
+      "description" : "returns 404 if product not found",
+      "request" : {
+        "method" : "GET",
+        "path" : "/product/",
+        "query" : "name=not_exist"
+      },
+      "response" : {
+        "status" : 404
+      }
+    },
+    {
+      "providerState" : "product named `router` exists",
+      "description" : "find product if exist",
+      "request" : {
+        "method" : "GET",
+        "path" : "/product/",
+        "query" : "name=router"
+      },
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Content-Type" : "application/json"
+        },
+        "body" : {
+          "id" : "1",
+          "name" : "router"
+        }
+      }
+    }
+  ]
+}
