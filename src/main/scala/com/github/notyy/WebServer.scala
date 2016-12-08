@@ -8,12 +8,23 @@ import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
 import akka.util.ByteString
+import com.github.notyy.service.{ProductService, TempProduct}
 
 import scala.io.StdIn
 import scala.util.Random
 
 object WebServer {
   def main(args: Array[String]) {
+
+    val configs = args.map{ paramStr =>
+      val param = paramStr.split("=")
+      (param(0), param(1))
+    }.toMap[String,String]
+    val mode = configs.getOrElse("mode", "production")
+
+    if(mode == "test"){
+      loadTestData()
+    }
 
     implicit val system = ActorSystem("my-system")
     implicit val materializer = ActorMaterializer()
@@ -49,5 +60,9 @@ object WebServer {
     bindingFuture
       .flatMap(_.unbind()) // trigger unbinding from the port
       .onComplete(_ => system.terminate()) // and shutdown when done
+  }
+
+  def loadTestData(): Unit ={
+    ProductService.create(TempProduct("router"))
   }
 }
