@@ -70,6 +70,7 @@ incOptions := incOptions.value.withNameHashing(true)
 // set the main class for the main 'run' task
 // change Compile to Test to set it for 'test:run'
 // mainClass in (Compile, run) := Some("com.kaopua.recall.Main")
+mainClass in (Compile, run) := Some("com.github.notyy.WebServer")
 
 // set the main class for the main 'test:run' task
 // mainClass in (Test, run) := Some("com.kaopua.recall.Main")
